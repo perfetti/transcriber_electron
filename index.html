@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Video Transcription App</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+            height: calc(100vh - 40px);
+        }
+        .video-list {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+        }
+        .import-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        .import-btn:hover {
+            background: #45a049;
+        }
+        .status-container {
+            margin-bottom: 20px;
+        }
+        .status-message {
+            background: #e8f5e9;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #2e7d32;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #ddd;
+            border-radius: 2px;
+            overflow: hidden;
+            display: none;
+        }
+        .progress-bar.active {
+            display: block;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: #4CAF50;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .video-item {
+            padding: 15px;
+            background: white;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .video-item:hover {
+            background: #e9e9e9;
+            transform: translateX(2px);
+        }
+        .video-name {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        .video-info {
+            font-size: 12px;
+            color: #666;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .main-content {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="video-list">
+            <button id="importBtn" class="import-btn">Import New Video</button>
+            <div class="status-container">
+                <div id="statusMessage" class="status-message">Ready to process videos</div>
+                <div id="progressBar" class="progress-bar">
+                    <div id="progressBarFill" class="progress-bar-fill"></div>
+                </div>
+            </div>
+            <div id="videoListContainer">
+                <!-- Video items will be added here dynamically -->
+            </div>
+        </div>
+        <div class="main-content">
+            <!-- Main content area -->
+        </div>
+    </div>
+    <script src="dist/renderer.js"></script>
+</body>
+</html>
