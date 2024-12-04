@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, dialog } from 'electron';
+import { app, BrowserWindow, ipcMain, dialog, shell } from 'electron';
 import * as path from 'path';
 import ffmpeg from 'fluent-ffmpeg';
 import ffmpegPath from 'ffmpeg-static';
@@ -125,5 +125,16 @@ ipcMain.handle('get-file-stats', async (_, filePath: string) => {
   } catch (error) {
     console.error('Error getting file stats:', error);
     throw error;
+  }
+});
+
+// Handle opening file location
+ipcMain.handle('open-file-location', async (_, filePath: string) => {
+  try {
+    await shell.showItemInFolder(filePath);
+    return true;
+  } catch (error) {
+    console.error('Error opening file location:', error);
+    return false;
   }
 });

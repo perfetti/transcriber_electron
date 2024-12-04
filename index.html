@@ -91,6 +91,50 @@
             background: #f5f5f5;
             padding: 20px;
             border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .media-container {
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .media-container.active {
+            display: flex;
+        }
+        .video-container {
+            width: 100%;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        video {
+            width: 100%;
+            max-height: 400px;
+        }
+        .audio-container {
+            width: 100%;
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        audio {
+            width: 100%;
+        }
+        .open-location-btn {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            align-self: flex-start;
+        }
+        .open-location-btn:hover {
+            background: #1976D2;
         }
     </style>
 </head>
@@ -109,7 +153,15 @@
             </div>
         </div>
         <div class="main-content">
-            <!-- Main content area -->
+            <div id="mediaContainer" class="media-container">
+                <div class="video-container">
+                    <video id="videoPlayer" controls></video>
+                </div>
+                <div class="audio-container">
+                    <audio id="audioPlayer" controls></audio>
+                </div>
+                <button id="openLocationBtn" class="open-location-btn">Open Audio File Location</button>
+            </div>
         </div>
     </div>
     <script src="dist/renderer.js"></script>

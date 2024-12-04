@@ -13,7 +13,12 @@ class VideoManager {
     private statusElement: HTMLElement;
     private progressBar: HTMLElement;
     private progressBarFill: HTMLElement;
+    private mediaContainer: HTMLElement;
+    private videoPlayer: HTMLVideoElement;
+    private audioPlayer: HTMLAudioElement;
+    private openLocationBtn: HTMLElement;
     private cleanupListener: (() => void) | null = null;
+    private selectedVideo: ProcessedVideo | null = null;
 
     constructor() {
         this.videoListContainer = document.getElementById('videoListContainer') as HTMLElement;
@@ -21,6 +26,10 @@ class VideoManager {
         this.statusElement = document.getElementById('statusMessage') as HTMLElement;
         this.progressBar = document.getElementById('progressBar') as HTMLElement;
         this.progressBarFill = document.getElementById('progressBarFill') as HTMLElement;
+        this.mediaContainer = document.getElementById('mediaContainer') as HTMLElement;
+        this.videoPlayer = document.getElementById('videoPlayer') as HTMLVideoElement;
+        this.audioPlayer = document.getElementById('audioPlayer') as HTMLAudioElement;
+        this.openLocationBtn = document.getElementById('openLocationBtn') as HTMLElement;
         this.setupEventListeners();
         this.loadVideos();
     }
@@ -38,6 +47,16 @@ class VideoManager {
                 this.setStatus('Error processing video');
                 this.hideProgress();
                 console.error('Error:', error);
+            }
+        });
+
+        this.openLocationBtn.addEventListener('click', async () => {
+            if (this.selectedVideo) {
+                try {
+                    await window.electronAPI.openFileLocation(this.selectedVideo.audioPath);
+                } catch (error) {
+                    console.error('Error opening file location:', error);
+                }
             }
         });
 
@@ -146,8 +165,18 @@ class VideoManager {
     }
 
     private selectVideo(video: ProcessedVideo) {
-        // TODO: Implement video selection handling
-        console.log('Selected video:', video);
+        this.selectedVideo = video;
+        
+        // Show media container
+        this.mediaContainer.classList.add('active');
+        
+        // Set video source
+        this.videoPlayer.src = `file://${video.videoPath}`;
+        this.videoPlayer.load();
+        
+        // Set audio source
+        this.audioPlayer.src = `file://${video.audioPath}`;
+        this.audioPlayer.load();
     }
 
     private saveVideos() {
